@@ -1,0 +1,25 @@
+version: "3"
+services:
+  app:
+    container_name: app
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - "db"
+    environment:
+      MYSQL_HOST: db
+    depends_on:
+      - db
+  db:
+    container_name: mydb
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: backend-api
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: "root"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
